@@ -54,17 +54,23 @@ bool test3f() {
     return test(arr, arr_sorted, 1);
 }
 
+bool test4f() {
+    int arr[] = {3,4,2,100,3,2,5,2,2,6,2,2,2,2,59,2,2,71};
+    int arr_sorted[] = {2,2,2,2,2,2,2,2,2,2,3,3,4,5,6,59,71,100};
+    return test(arr, arr_sorted, 10);
+}
 
-bool testr() {
-    int n = rand() % 3000 + 1;
+
+bool testr(int i) {
+    int n = rand() % (rand() % 10000) + 1;
     bool contains_neg_values = rand() % 1000 < 500;
     int *arr = malloc(n * sizeof(int));
     int *arr_sorted = malloc(n * sizeof(int));
     if (arr == NULL || arr_sorted == NULL) fprintf(stderr, "Malloc failed."), exit(0);
 
     for (int i = 0; i < n; i++) {
-        if (contains_neg_values) arr[i] = rand() % 100000 - (rand() % 200000);
-            else arr[i] = rand() % 100000;
+        if (contains_neg_values) arr[i] = rand() % 150 + i * 100 - (rand() % 300 + i * 100);
+            else arr[i] = rand() % 150 + i * 100;
         arr_sorted[i] = arr[i];
     }
 
@@ -77,12 +83,12 @@ bool testr() {
     return passed;
 }
 
-bool (*testsf[])() = {test1f, test2f, test3f};
+bool (*testsf[])() = {test1f, test2f, test3f, test4f};
 
 void test_bucket_sort() {
     srand(time(NULL));   // Initialization of random
 
-    int fixed_tests = 3;
+    int fixed_tests = 4;
     int fixed_passed = 0;
     int random_tests = 100;
     int random_passed = 0;
@@ -100,7 +106,7 @@ void test_bucket_sort() {
 
     printf("\nStarting random tests:\n");
     for (int i = 0; i < random_tests; i++) {
-        if (testr()) {
+        if (testr(i)) {
             random_passed++;
             printf("PASSED");
         } else {

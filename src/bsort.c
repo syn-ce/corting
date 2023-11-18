@@ -31,6 +31,7 @@ void bucket_push(Bucket *bu, int element) {
         for (int i = 0; i < bu->capacity; i++) { // Copy old elements
             arr[i] = bu->array[i];
         }
+        bu->capacity = bu->capacity * 2;
         free(bu->array);
         bu->array = arr;
     }
