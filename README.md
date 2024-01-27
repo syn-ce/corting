@@ -1,4 +1,4 @@
-# cburt
+# corting 
 Naive Integer BucketSort in C.
 
 With Integer-array $\text{array}$ of length $\text{n}$:\

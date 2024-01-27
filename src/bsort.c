@@ -1,6 +1,8 @@
+#include <limits.h>
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <limits.h>
+#include "array_utils.h"
 
 // Naive BucketSort in C.
 
@@ -91,5 +93,17 @@ void bucket_sort(int *array, int n) { // Try to compensate for negative values b
     }
     free(arr_copy);
     free(buckets);
+}
+
+bool bucket_sort_equals(int *arr1, int *arr2, int n) {
+    bucket_sort(arr1, n);
+    if (!array_equals(arr1, arr2, n)) {
+        printf("SHOULD: ");
+        print_array(arr2, n);
+        printf("WAS: ");
+        print_array(arr1, n);
+        return false;
+    }
+    return true;
 }
 

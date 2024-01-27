@@ -1,63 +1,32 @@
 #include <stdbool.h>
 #include <stdio.h>
-#include <time.h>
 #include <stdlib.h>
+#include <time.h>
+#include "../src/array_utils.h"
 #include "../src/bsort.h"
-
-void print_array(int *arr, int n) {
-    printf("[ ");
-    for (int i = 0; i < n-1; i++) {
-        printf("%d, ", arr[i]);
-    }
-    printf("%d ]\n", arr[n-1]);
-}
-
-int compare_int( const void* a, const void* b)
-{
-     int int_a = * ( (int*) a );
-     int int_b = * ( (int*) b );
-
-     if ( int_a == int_b ) return 0;
-     else if ( int_a < int_b ) return -1;
-     else return 1;
-}
-
-bool test(int *arr, int *arr_sorted, int n) {
-    bucket_sort(arr, n);
-    for (int i = 0; i < 1; i++) {
-        if (arr[i] != arr_sorted[i]) {
-            printf("SHOULD: ");
-            print_array(arr_sorted, n);
-            printf("WAS: ");
-            print_array(arr, n);
-            return false;
-        }
-    }
-    return true;
-}
 
 bool test1f() {
     int arr[] = {0};
     int arr_sorted[] = {0};
-    return test(arr, arr_sorted, 1);
+    return bucket_sort_equals(arr, arr_sorted, 1);
 }
 
 bool test2f() {
     int arr[] = {12, 14, 20, 12, 2, 1, 5, 0, 3, 2, 5, 7, 8};
     int arr_sorted[] = {0, 1, 2, 2, 3, 5, 5, 7, 8, 12, 12, 14, 20};
-    return test(arr, arr_sorted, 13);
+    return bucket_sort_equals(arr, arr_sorted, 13);
 }
 
 bool test3f() {
     int arr[] = {-1};
     int arr_sorted[] = {-1};
-    return test(arr, arr_sorted, 1);
+    return bucket_sort_equals(arr, arr_sorted, 1);
 }
 
 bool test4f() {
     int arr[] = {3,4,2,100,3,2,5,2,2,6,2,2,2,2,59,2,2,71};
     int arr_sorted[] = {2,2,2,2,2,2,2,2,2,2,3,3,4,5,6,59,71,100};
-    return test(arr, arr_sorted, 10);
+    return bucket_sort_equals(arr, arr_sorted, 10);
 }
 
 
@@ -74,9 +43,9 @@ bool testr(int i) {
         arr_sorted[i] = arr[i];
     }
 
-    qsort(arr_sorted, n, sizeof(int), compare_int);
+    qsort(arr_sorted, n, sizeof(int), int_compare);
 
-    bool passed = test(arr, arr_sorted, n);
+    bool passed = bucket_sort_equals(arr, arr_sorted, n);
 
     free(arr);
 
